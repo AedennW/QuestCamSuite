@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Quest Camera Suite</string>
-    <string name="channel_name">Capture notifications</string>
-    <string name="channel_desc">Recording status and storage warnings</string>
-    <string name="permission_rationale">Quest Camera Suite needs camera access (Camera2 + Horizon OS headset camera) to show the passthrough feed and capture photos and videos. Microphone access is only used for video sound.</string>
-</resources>
