@@ -10,11 +10,11 @@
 ---
 ## What it is
 Quest 3's stock software gives you system recording and casting — but no manual camera
-app for the passthrough hardware. **Quest Camera Suite fills that gap as far as the
-platform honestly allows.**
+app for the passthrough hardware. ** Quest Camera Suite fills that gap as far as the
+platform honestly allows. **
 Before any code was written, the Quest 3's camera access restrictions were verified
-against Meta's current documentation: the **Passthrough Camera API** (Horizon OS v74+,
-Camera2 from v76+) exposes the two forward-facing **RGB cameras** at up to
+against Meta's current documentation: the ** Passthrough Camera API ** (Horizon OS v74+,
+Camera2 from v76+) exposes the two forward-facing ** RGB cameras ** at up to
 ** 1280×960 @ 30 FPS per eye ** with 40–60 ms latency. Everything this app does is built
 on that pipeline — and everything it refuses to fake is documented below and inside
 [`FEATURES.md`](FEATURES.md).
@@ -27,14 +27,14 @@ on that pipeline — and everything it refuses to fake is documented below and i
 | ✅ | Passthrough RGB cameras, both eyes | Camera2 + Meta vendor keys `com.meta.extra_metadata.camera_source` / `.position` |
 | ✅ | 1280×960 @ 30 FPS feed | The pipeline's documented maximum — we request every bit of it |
 | ✅ | Photos, video, audio, storage, sharing | Standard, supported Android APIs (Camera2, MediaRecorder, MediaStore, SAF) |
-| 🧪 | Digital zoom / exposure comp | Applied **only if** the HAL reports support; controls hide otherwise |
+| 🧪 | Digital zoom / exposure comp | Applied ** only if ** the HAL reports support; controls hide otherwise |
 | 🧪 | HEVC, AF modes | Probed from `MediaCodecList` / `CameraCharacteristics` at runtime |
 | ⛔ | IR tracking cameras | Reserved for system SLAM — never enumerable through Camera2 |
 | ⛔ | Higher resolution / FPS / slow-mo | 30 FPS is the hardware ceiling of this API |
 | ⛔ | Autofocus, OIS/EIS, HDR, color dials | The passthrough HAL exposes none of them |
 | ⛔ | POV screen capture | `MediaProjection` is privileged on Quest — excluded by design |
 The app enforces this table at runtime: every control is probed before it's drawn, so
-you never see a dead switch. The built-in **Diagnostics** tab shows the live result of
+you never see a dead switch. The built-in ** Diagnostics ** tab shows the live result of
 each probe, with reasons attached.
 ---
 ## Feature matrix
@@ -54,7 +54,7 @@ each probe, with reasons attached.
 <details>
 <summary><b>&nbsp;🧪 Gated / experimental</b></summary>
 - `HEADSET_CAMERA` runtime permission (sideload + Developer Mode only)
-- Requires Horizon OS **v76+** — older builds report zero cameras
+- Requires Horizon OS ** v76+ ** — older builds report zero cameras
 - Timelapse: frames capture today; in-app MP4 assembly is roadmap
 - Full immersive MR composite needs an OpenXR native activity — roadmap
 - Store distribution of camera apps requires Meta's data-use review; sideloading is unaffected
@@ -71,7 +71,7 @@ gradle wrapper --gradle-version 8.9   # once, if the wrapper jar isn't committed
 gradle testDebugUnitTest              # JVM unit tests
 gradle assembleDebug                  # → app/build/outputs/apk/debug/app-debug.apk
 ```
-Requirements: **JDK 17**, **Android SDK 34** + build-tools 34.0.0.
+Requirements: ** JDK 17 **, ** Android SDK 34 ** + build-tools 34.0.0.
 (Or just push to GitHub and let Actions build it — [see below](#-cicd-pipeline).)
 ### Install on Quest 3
 1. Enable ** Developer Mode ** in the Meta Horizon phone app → your headset.
@@ -81,9 +81,9 @@ Requirements: **JDK 17**, **Android SDK 34** + build-tools 34.0.0.
 adb devices
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
-4. Launch → grant **Camera** *and* **Headset Camera**
+4. Launch → grant ** Camera ** * and * ** Headset Camera **
    (`horizonos.permission.HEADSET_CAMERA`) → enable system passthrough.
-5. Open the **Diagnostics** tab → *Re-run*. Every green row is a probe that just
+5. Open the ** Diagnostics ** tab → * Re-run *. Every green row is a probe that just
    passed against your actual hardware.
 ---
 ## Architecture
@@ -125,13 +125,13 @@ app/src/main/java/com/camerasuite/quest/
 ---
 ## CI/CD pipeline
 [`.github/workflows/android-build.yml`](.github/workflows/android-build.yml) runs on
-**pushes to main, PRs, manual dispatch, and `v*` tags**:
+** pushes to main, PRs, manual dispatch, and `v*` tags **:
 | Stage | What happens |
 |---|---|
 | Setup | JDK 17 (Temurin) · Android SDK 34 · Gradle 8.9 · wrapper regeneration |
 | Validate | Kotlin compile · `testDebugUnitTest` · lint (report-only) |
 | Build | `assembleDebug` + `assembleRelease` |
-| Sign | Release signed **only** when secrets are configured |
+| Sign | Release signed ** only ** when secrets are configured |
 | Verify | APK exists · manifest unpacks · `aapt` dump · `apksigner verify` |
 | Artifact | `MetaQuestCamera-debug.apk` + `MetaQuestCamera.apk` uploaded |
 | Release | On `v*` tags: GitHub Release with APKs + notes attached |
@@ -146,21 +146,21 @@ git tag v1.0.0 && git push origin v1.0.0    # cut a release build
 | `QUEST_KEY_ALIAS` | key alias |
 | `QUEST_KEY_PASSWORD` | key password |
 Set repo variable `QUEST_SIGNING_ENABLED = true` to activate. Without it, CI ships a
-**debug-signed APK that installs via ADB immediately** — no setup penalty.
+** debug-signed APK that installs via ADB immediately ** — no setup penalty.
 ### What CI actually proves
 Compilation, unit tests, APK structure, manifest, permissions, signature validity.
-**Not** on-headset behavior — Camera2 session negotiation only exists on physical
+** Not ** on-headset behavior — Camera2 session negotiation only exists on physical
 hardware. Flash the debug build and check Diagnostics; report deltas as issues.
 ---
 ## Building on AWS
 Prefer AWS over GitHub-hosted runners? Three routes, files included under [`aws/`](aws/):
-1. **EC2 self-hosted runner** *(recommended)* — register an EC2 instance in
-   *Actions → Runners* with label `android`, change `runs-on:` to
+1. ** EC2 self-hosted runner ** * (recommended) * — register an EC2 instance in
+   * Actions → Runners * with label `android`, change `runs-on:` to
    `[self-hosted, linux, x64, android]`, stop it when idle (~$0.01–0.02/hr spot).
-2. **CodeBuild + CodePipeline** — build [`aws/Dockerfile`](aws/Dockerfile), push to
+2. ** CodeBuild + CodePipeline ** — build [`aws/Dockerfile`](aws/Dockerfile), push to
    ECR, point a CodeBuild project at [`aws/buildspec.yml`](aws/buildspec.yml).
    No KVM → no emulator → unit tests + APK assembly only. Secrets via Secrets Manager.
-3. **Device Farm** — real-device validation for the part CI can't prove
+3. ** Device Farm ** — real-device validation for the part CI can't prove
    (Meta used this service for Quest testing at re:Invent 2024).
 ---
 ## Documentation
@@ -169,7 +169,7 @@ Prefer AWS over GitHub-hosted runners? Three routes, files included under [`aws/
 | [`FEATURES.md`](FEATURES.md) | Every requested feature: implemented / experimental / platform-blocked, with reasons |
 | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) | Install, permission, capture, storage, LAN-share, thermal fixes |
 | [`aws/`](aws/) | CodeBuild buildspec + custom build-image Dockerfile |
-> **Screenshots in this README?** Intentionally absent — they're only honest after
+> ** Screenshots in this README? ** Intentionally absent — they're only honest after
 > validation on real hardware. Add your own under `docs/` once you've flashed it.
 ---
 ## Roadmap
@@ -181,7 +181,7 @@ Prefer AWS over GitHub-hosted runners? Three routes, files included under [`aws/
 - [ ] Performance benchmarking screen
 ---
 ## Contributing
-Issues and PRs welcome. The one rule: **no fake capability** — a feature either works
+Issues and PRs welcome. The one rule: ** no fake capability ** — a feature either works
 against a supported API, or it's presented as unavailable with the reason. If you find
 a new HAL capability on a newer Horizon OS build (zoom range, EV, AF mode…), the engine
 probes it and the UI unlocks automatically — the PR only needs a note in `FEATURES.md`.
