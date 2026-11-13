@@ -1,0 +1,57 @@
+# AWS CodeBuild buildspec — Quest Camera Suite
+#
+# Project setup:
+#   1. Build the custom image from aws/Dockerfile and push it to ECR.
+#   2. Create a CodeBuild project using that image, source = this repo
+#      (GitHub via CodePipeline, or an S3 zip of the project).
+#   3. Optional signing: add environment variables of type SECRETS_MANAGER
+#      named QUEST_KEYSTORE_B64 / QUEST_KEY_ALIAS / QUEST_KEY_PASSWORD.
+#      Secrets are read from AWS Secrets Manager — never from git.
+#
+# CodeBuild has no KVM, so there is no Android emulator here: unit tests
+# and APK assembly only. For on-device validation use Device Farm.
+
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "JDK:" && java -version
+      - echo "SDK: $ANDROID_HOME" && ls "$ANDROID_HOME"
+      - gradle --version
+
+  pre_build:
+    commands:
+      - echo "Resolving release signing (optional)..."
+      - |
+        if [ -n "$QUEST_KEYSTORE_B64" ]; then
+          echo "$QUEST_KEYSTORE_B64" | base64 -d > /tmp/quest.keystore
+          export QUEST_KEYSTORE=/tmp/quest.keystore
+          echo "Release signing enabled"
+        else
+          echo "No signing secret — building unsigned release"
+        fi
+
+  build:
+    commands:
+      - gradle --no-daemon --stacktrace testDebugUnitTest
+      - gradle --no-daemon --stacktrace assembleDebug assembleRelease
+
+  post_build:
+    commands:
+      - ls -lh app/build/outputs/apk/debug/ app/build/outputs/apk/release/
+      - |
+        mkdir -p dist
+        cp app/build/outputs/apk/debug/app-debug.apk dist/MetaQuestCamera-debug.apk
+        cp app/build/outputs/apk/release/app-release.apk dist/MetaQuestCamera.apk 2>/dev/null || \
+        cp app/build/outputs/apk/release/app-release-unsigned.apk dist/MetaQuestCamera-release-unsigned.apk
+        ls -lh dist/
+
+artifacts:
+  files:
+    - dist/*.apk
+
+cache:
+  paths:
+    - /root/.gradle/caches
+    - /root/.gradle/wrapper
