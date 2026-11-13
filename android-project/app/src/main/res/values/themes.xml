@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="qcs_bg">#05070D</color>
+    <color name="qcs_panel">#0B0F1A</color>
+    <color name="qcs_accent">#45E8FF</color>
+
+    <style name="Theme.QuestCameraSuite" parent="android:Theme.Material.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@color/qcs_bg</item>
+        <item name="android:statusBarColor">@color/qcs_bg</item>
+        <item name="android:navigationBarColor">@color/qcs_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
