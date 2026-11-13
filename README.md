@@ -15,10 +15,10 @@ platform honestly allows.**
 Before any code was written, the Quest 3's camera access restrictions were verified
 against Meta's current documentation: the **Passthrough Camera API** (Horizon OS v74+,
 Camera2 from v76+) exposes the two forward-facing **RGB cameras** at up to
-**1280×960 @ 30 FPS per eye** with 40–60 ms latency. Everything this app does is built
+** 1280×960 @ 30 FPS per eye ** with 40–60 ms latency. Everything this app does is built
 on that pipeline — and everything it refuses to fake is documented below and inside
 [`FEATURES.md`](FEATURES.md).
-> **Unofficial, open-source project.** Not affiliated with Meta Platforms, Inc.
+> ** Unofficial, open-source project. ** Not affiliated with Meta Platforms, Inc.
 > No undocumented hardware access, no Quest system modifications, no simulated controls.
 ---
 ## The reality check (read this first)
@@ -42,14 +42,14 @@ each probe, with reasons attached.
 <summary><b>&nbsp;✅ Implemented in v1.0</b></summary>
 | Area | Highlights |
 |---|---|
-| **Camera** | Both passthrough eyes, live 1280×960 feed, eye switcher, latency-first preview session |
-| **Photo studio** | Single · burst · self-timer · interval — JPEG (quality dial) or lossless PNG, converted in-app from raw YUV |
-| **Video lab** | H.264/HEVC presets (Maximum → Custom), pause/resume, live REC indicator, auto-split for long recordings, too-short clip recovery |
-| **Destination vault** | Internal MediaStore, any SAF folder, USB-OTG drives — persisted grants across sessions, date auto-organization, overwrite-proof naming, low-space warnings |
-| **Gallery** | Grid/list, search, sort, favorites, multi-select, bulk export, bulk delete, rename, share sheet, Media3 playback |
-| **Connectivity** | Built-in zero-dependency LAN share server — pull originals from any PC/phone browser on the same Wi-Fi; no internet, no account |
-| **Diagnostics** | Live probes: permissions, vendor-key cameras, stream maps, fps ranges, encoders, storage, thermal, battery — copyable as a text report |
-| **UX** | Dark spatial theme, rail navigation, overlays (grid / timestamp / watermark), accents, UI scale, per-mode HUD |
+| ** Camera ** | Both passthrough eyes, live 1280×960 feed, eye switcher, latency-first preview session |
+| ** Photo studio ** | Single · burst · self-timer · interval — JPEG (quality dial) or lossless PNG, converted in-app from raw YUV |
+| ** Video lab ** | H.264/HEVC presets (Maximum → Custom), pause/resume, live REC indicator, auto-split for long recordings, too-short clip recovery |
+| ** Destination vault ** | Internal MediaStore, any SAF folder, USB-OTG drives — persisted grants across sessions, date auto-organization, overwrite-proof naming, low-space warnings |
+| ** Gallery ** | Grid/list, search, sort, favorites, multi-select, bulk export, bulk delete, rename, share sheet, Media3 playback |
+| ** Connectivity ** | Built-in zero-dependency LAN share server — pull originals from any PC/phone browser on the same Wi-Fi; no internet, no account |
+| ** Diagnostics ** | Live probes: permissions, vendor-key cameras, stream maps, fps ranges, encoders, storage, thermal, battery — copyable as a text report |
+| ** UX ** | Dark spatial theme, rail navigation, overlays (grid / timestamp / watermark), accents, UI scale, per-mode HUD |
 </details>
 <details>
 <summary><b>&nbsp;🧪 Gated / experimental</b></summary>
@@ -74,7 +74,7 @@ gradle assembleDebug                  # → app/build/outputs/apk/debug/app-debu
 Requirements: **JDK 17**, **Android SDK 34** + build-tools 34.0.0.
 (Or just push to GitHub and let Actions build it — [see below](#-cicd-pipeline).)
 ### Install on Quest 3
-1. Enable **Developer Mode** in the Meta Horizon phone app → your headset.
+1. Enable ** Developer Mode ** in the Meta Horizon phone app → your headset.
 2. Connect USB-C (or wireless ADB), accept the debug prompt inside the headset.
 3. Install:
 ```bash
