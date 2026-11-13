@@ -1,6 +1,6 @@
 <div align="center">
 # Quest Camera Suite
-**An honest, advanced camera & capture suite for Meta Quest 3 / 3S — built entirely on officially supported APIs.**
+** An honest, advanced camera & capture suite for Meta Quest 3 / 3S — built entirely on officially supported APIs. **
 ![Platform](https://img.shields.io/badge/platform-Android%2014%20%C2%B7%20Horizon%20OS%20v76%2B-1c1e26?style=for-the-badge&logo=meta)
 ![API](https://img.shields.io/badge/API-Camera2%20%2B%20Passthrough%20Camera%20API-45e8ff?style=for-the-badge)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.0-8f7bff?style=for-the-badge&logo=kotlin&logoColor=white)
